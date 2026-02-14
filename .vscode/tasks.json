@@ -1,0 +1,30 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build Sorting Visualizer",
+            "type": "shell",
+            "command": "C:\\mingw64\\bin\\g++.exe",
+            "args": [
+                "-std=c++17",
+
+                "-IC:\\SFML\\include",
+
+                "src\\main.cpp",
+                "src\\app\\Application.cpp",
+
+                "-LC:\\SFML\\lib",
+                "-lsfml-graphics",
+                "-lsfml-window",
+                "-lsfml-system",
+
+                "-o",
+                "build\\sorting-visualizer.exe"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}
