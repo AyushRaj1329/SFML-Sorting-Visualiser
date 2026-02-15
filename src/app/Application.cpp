@@ -87,6 +87,7 @@ void Application::processEvents()
                     currentState == VisualizerState::Paused ||
                     currentState == VisualizerState::Finished)
                 {
+                    arrayModel.restoreOriginal(); 
                     sortController.restart(arrayModel);
                     currentState = VisualizerState::Sorting;
                 }

@@ -23,10 +23,11 @@ void ArrayModel::generate(int n)
         values.push_back(i);
     }
 
-    // Random shuffle
-    random_device rd;
-    mt19937 gen(rd());
-    shuffle(values.begin(), values.end(), gen);
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::shuffle(values.begin(), values.end(), gen);
+
+    originalValues = values;
 
     resetCounters();
     clearActiveIndices();
@@ -64,7 +65,7 @@ void ArrayModel::clearActiveIndices()
     activeIndex2 = -1;
 }
 
-const std::vector<int>& ArrayModel::getValues() const
+const std::vector<int> &ArrayModel::getValues() const
 {
     return values;
 }
@@ -92,4 +93,11 @@ int ArrayModel::getActiveIndex2() const
 int ArrayModel::size() const
 {
     return static_cast<int>(values.size());
+}
+
+void ArrayModel::restoreOriginal()
+{
+    values = originalValues;
+    resetCounters();
+    clearActiveIndices();
 }

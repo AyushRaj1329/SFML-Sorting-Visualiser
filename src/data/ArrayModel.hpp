@@ -25,6 +25,10 @@ public:
     // Clear active indices
     void clearActiveIndices();
 
+    // Restore the original shuffled array
+    void restoreOriginal();
+
+
     // Getters
     const std::vector<int>& getValues() const;
     int getComparisons() const;
@@ -35,10 +39,12 @@ public:
 
 private:
     std::vector<int> values;
+    std::vector<int> originalValues;
 
     int comparisons;
     int swaps;
 
     int activeIndex1;
     int activeIndex2;
+
 };
