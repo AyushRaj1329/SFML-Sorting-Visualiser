@@ -15,6 +15,7 @@
                 "src\\data\\ArrayModel.cpp",
                 "src\\render\\BarRenderer.cpp",
                 "src\\algorithms\\BubbleSort.cpp",
+                "src\\core\\SortController.cpp",
 
 
 

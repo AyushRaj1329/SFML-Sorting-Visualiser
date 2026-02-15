@@ -4,6 +4,8 @@
 #include "../data/ArrayModel.hpp"
 #include "../render/BarRenderer.hpp"
 #include "../core/VisualizerState.hpp"
+#include "../core/SortController.hpp"
+
 
 
 
@@ -27,6 +29,8 @@ private:
     BarRenderer barRenderer;
     VisualizerState currentState;
     int elementCount;
+    SortController sortController;
+
 
 
     

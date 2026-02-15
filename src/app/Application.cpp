@@ -35,6 +35,23 @@ void Application::processEvents()
             {
                 window.close();
             }
+
+            // 🔹 ENTER LOGIC (Independent of state block)
+            if (keyEvent->code == sf::Keyboard::Key::Enter)
+            {
+                if (currentState == VisualizerState::WaitingForInput)
+                {
+                    arrayModel.generate(elementCount);
+                    currentState = VisualizerState::Ready;
+                }
+                else if (currentState == VisualizerState::Ready)
+                {
+                    sortController.start(arrayModel);
+                    currentState = VisualizerState::Sorting;
+                }
+            }
+
+            // 🔹 +/- Only When WaitingForInput
             if (currentState == VisualizerState::WaitingForInput)
             {
                 if (keyEvent->code == sf::Keyboard::Key::Add ||
@@ -43,16 +60,35 @@ void Application::processEvents()
                     if (elementCount < 300)
                         elementCount += 5;
                 }
+
                 if (keyEvent->code == sf::Keyboard::Key::Hyphen ||
                     keyEvent->code == sf::Keyboard::Key::Subtract)
                 {
                     if (elementCount > 10)
                         elementCount -= 5;
                 }
-                if (keyEvent->code == sf::Keyboard::Key::Enter)
+            }
+            if (keyEvent->code == sf::Keyboard::Key::Space)
+            {
+                if (currentState == VisualizerState::Sorting)
                 {
-                    arrayModel.generate(elementCount);
-                    currentState = VisualizerState::Ready;
+                    sortController.pause();
+                    currentState = VisualizerState::Paused;
+                }
+                else if (currentState == VisualizerState::Paused)
+                {
+                    sortController.resume();
+                    currentState = VisualizerState::Sorting;
+                }
+            }
+            if (keyEvent->code == sf::Keyboard::Key::R)
+            {
+                if (currentState == VisualizerState::Sorting ||
+                    currentState == VisualizerState::Paused ||
+                    currentState == VisualizerState::Finished)
+                {
+                    sortController.restart(arrayModel);
+                    currentState = VisualizerState::Sorting;
                 }
             }
         }
@@ -61,7 +97,15 @@ void Application::processEvents()
 
 void Application::update()
 {
-    // We will add logic here later
+    if (currentState == VisualizerState::Sorting)
+    {
+        sortController.update(arrayModel);
+
+        if (sortController.isFinished())
+        {
+            currentState = VisualizerState::Finished;
+        }
+    }
 }
 
 void Application::render()
