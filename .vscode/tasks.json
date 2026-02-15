@@ -12,6 +12,11 @@
 
                 "src\\main.cpp",
                 "src\\app\\Application.cpp",
+                "src\\data\\ArrayModel.cpp",
+                "src\\render\\BarRenderer.cpp",
+                "src\\algorithms\\BubbleSort.cpp",
+
+
 
                 "-LC:\\SFML\\lib",
                 "-lsfml-graphics",

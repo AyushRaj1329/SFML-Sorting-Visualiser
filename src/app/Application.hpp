@@ -1,6 +1,15 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include "../data/ArrayModel.hpp"
+#include "../render/BarRenderer.hpp"
+#include "../core/VisualizerState.hpp"
+
+
+
+
+using namespace sf;
+
 
 class Application
 {
@@ -13,5 +22,12 @@ private:
     void update();
     void render();
 
-    sf::RenderWindow window;
+    RenderWindow window;
+    ArrayModel arrayModel;
+    BarRenderer barRenderer;
+    VisualizerState currentState;
+    int elementCount;
+
+
+    
 };
