@@ -5,6 +5,7 @@
 #include "../render/BarRenderer.hpp"
 #include "../core/VisualizerState.hpp"
 #include "../core/SortController.hpp"
+#include "../render/UIOverlay.hpp"
 
 
 
@@ -30,6 +31,7 @@ private:
     VisualizerState currentState;
     int elementCount;
     SortController sortController;
+    UIOverlay uiOverlay;
 
 
 

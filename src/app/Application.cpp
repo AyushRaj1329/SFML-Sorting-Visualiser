@@ -87,10 +87,20 @@ void Application::processEvents()
                     currentState == VisualizerState::Paused ||
                     currentState == VisualizerState::Finished)
                 {
-                    arrayModel.restoreOriginal(); 
+                    arrayModel.restoreOriginal();
                     sortController.restart(arrayModel);
                     currentState = VisualizerState::Sorting;
                 }
+            }
+
+            if (keyEvent->code == sf::Keyboard::Key::Period)
+            {
+                sortController.increaseSpeed();
+            }
+
+            if (keyEvent->code == sf::Keyboard::Key::Comma)
+            {
+                sortController.decreaseSpeed();
             }
         }
     }
@@ -107,6 +117,7 @@ void Application::update()
             currentState = VisualizerState::Finished;
         }
     }
+    uiOverlay.update(arrayModel, sortController, currentState);
 }
 
 void Application::render()
@@ -114,6 +125,7 @@ void Application::render()
     window.clear(sf::Color::White);
 
     barRenderer.draw(window, arrayModel);
+    uiOverlay.draw(window);
 
     window.display();
 }

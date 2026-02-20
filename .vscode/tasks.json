@@ -16,6 +16,7 @@
                 "src\\render\\BarRenderer.cpp",
                 "src\\algorithms\\BubbleSort.cpp",
                 "src\\core\\SortController.cpp",
+                "src\\render\\UIOverlay.cpp",
 
 
 
