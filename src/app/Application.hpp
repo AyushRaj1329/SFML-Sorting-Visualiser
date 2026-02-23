@@ -6,6 +6,7 @@
 #include "../core/VisualizerState.hpp"
 #include "../core/SortController.hpp"
 #include "../render/UIOverlay.hpp"
+#include "../algorithms/AlgorithmType.hpp"
 
 
 
@@ -32,6 +33,9 @@ private:
     int elementCount;
     SortController sortController;
     UIOverlay uiOverlay;
+    AlgorithmType selectedAlgorithm;
+    
+    // selectedAlgorithm = AlgorithmType::Bubble;
 
 
 

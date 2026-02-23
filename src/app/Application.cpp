@@ -6,6 +6,7 @@ Application::Application()
 {
     window.setFramerateLimit(60);
     currentState = VisualizerState::WaitingForInput;
+    selectedAlgorithm = AlgorithmType::Bubble;
     elementCount = 50;
 }
 
@@ -46,7 +47,7 @@ void Application::processEvents()
                 }
                 else if (currentState == VisualizerState::Ready)
                 {
-                    sortController.start(arrayModel);
+                    sortController.start(arrayModel, selectedAlgorithm);
                     currentState = VisualizerState::Sorting;
                 }
             }
@@ -81,7 +82,8 @@ void Application::processEvents()
                     currentState = VisualizerState::Sorting;
                 }
             }
-            if (keyEvent->code == sf::Keyboard::Key::R)
+            if (keyEvent->code == sf::Keyboard::Key::R &&
+                !keyEvent->shift)
             {
                 if (currentState == VisualizerState::Sorting ||
                     currentState == VisualizerState::Paused ||
@@ -101,6 +103,38 @@ void Application::processEvents()
             if (keyEvent->code == sf::Keyboard::Key::Comma)
             {
                 sortController.decreaseSpeed();
+            }
+
+            if (currentState == VisualizerState::WaitingForInput ||
+                currentState == VisualizerState::Ready)
+            {
+                if (keyEvent->code == sf::Keyboard::Key::Num1)
+                    selectedAlgorithm = AlgorithmType::Bubble;
+
+                if (keyEvent->code == sf::Keyboard::Key::Num2)
+                {
+
+                    selectedAlgorithm = AlgorithmType::Selection;
+                }
+
+                if (keyEvent->code == sf::Keyboard::Key::Num3)
+                    selectedAlgorithm = AlgorithmType::Insertion;
+            }
+
+            if (keyEvent->code == sf::Keyboard::Key::R &&
+                keyEvent->shift)
+            {
+                // FULL RESET
+
+                sortController.reset();
+                arrayModel = ArrayModel();
+                // arrayModel.resetCounters();
+                // arrayModel.clearActiveIndices();
+
+                selectedAlgorithm = AlgorithmType::Bubble;
+                elementCount = 50; // or your default
+
+                currentState = VisualizerState::WaitingForInput;
             }
         }
     }

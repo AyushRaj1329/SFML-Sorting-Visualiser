@@ -7,9 +7,7 @@
             "command": "C:\\mingw64\\bin\\g++.exe",
             "args": [
                 "-std=c++17",
-
                 "-IC:\\SFML\\include",
-
                 "src\\main.cpp",
                 "src\\app\\Application.cpp",
                 "src\\data\\ArrayModel.cpp",
@@ -17,14 +15,12 @@
                 "src\\algorithms\\BubbleSort.cpp",
                 "src\\core\\SortController.cpp",
                 "src\\render\\UIOverlay.cpp",
-
-
-
+                "src\\algorithms\\SelectionSort.cpp",
+                "src\\algorithms\\InsertionSort.cpp",
                 "-LC:\\SFML\\lib",
                 "-lsfml-graphics",
                 "-lsfml-window",
                 "-lsfml-system",
-
                 "-o",
                 "build\\sorting-visualizer.exe"
             ],

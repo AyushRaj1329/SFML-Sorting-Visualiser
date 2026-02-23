@@ -1,54 +1,44 @@
 #include "SortController.hpp"
+#include "../algorithms/BubbleSort.hpp"
+#include "../algorithms/SelectionSort.hpp"
+#include "../algorithms/InsertionSort.hpp"
+#include "../data/ArrayModel.hpp"
 
 SortController::SortController()
-    : algorithm(nullptr), running(false), speedMultiplier(1.0f), accumulatedTime(0.0f), baseStepTime(0.02f)
+    : algorithm(nullptr),
+     running(false),
+      currentAlgorithm(AlgorithmType::Bubble),
+     speedMultiplier(1.0f),
+      accumulatedTime(0.0f),
+     baseStepTime(0.02f)
 {
 }
 
-void SortController::start(ArrayModel &model)
+void SortController::start(ArrayModel &model, AlgorithmType type)
 {
-    delete algorithm; // clean old one
-    algorithm = new BubbleSort();
+    delete algorithm;
+    currentAlgorithm = type; 
+
+    switch (type)
+    {
+    case AlgorithmType::Bubble:
+        algorithm = new BubbleSort();
+        break;
+
+    case AlgorithmType::Selection:
+        algorithm = new SelectionSort();
+        break;
+
+    case AlgorithmType::Insertion:
+        algorithm = new InsertionSort();
+        break;
+    }
 
     running = true;
 
     accumulatedTime = 0.0f;
     clock.restart();
 }
-
-// void SortController::update(ArrayModel& model)
-// {
-//     if (!running || !algorithm)
-//         return;
-
-//     if (!algorithm->isFinished())
-//     {
-//         algorithm->step(model);
-//     }
-//     else
-//     {
-//         running = false;
-//     }
-// }
-
-// void SortController::update(ArrayModel &model)
-// {
-//     if (!running || !algorithm)
-//         return;
-
-//     for (int i = 0; i < stepsPerFrame; ++i)
-//     {
-//         if (!algorithm->isFinished())
-//         {
-//             algorithm->step(model);
-//         }
-//         else
-//         {
-//             running = false;
-//             break;
-//         }
-//     }
-// }
 
 void SortController::update(ArrayModel &model)
 {
@@ -95,9 +85,24 @@ void SortController::resume()
 void SortController::restart(ArrayModel &model)
 {
     delete algorithm;
-    algorithm = new BubbleSort();
+    switch (currentAlgorithm)
+    {
+        case AlgorithmType::Bubble:
+            algorithm = new BubbleSort();
+            break;
+
+        case AlgorithmType::Selection:
+            algorithm = new SelectionSort();
+            break;
+
+        case AlgorithmType::Insertion:
+            algorithm = new InsertionSort();
+            break;
+    }
 
     running = true;
+    accumulatedTime = 0.0f;
+    clock.restart();
 }
 
 bool SortController::isRunning() const
@@ -125,4 +130,22 @@ void SortController::decreaseSpeed()
 float SortController::getSpeedMultiplier() const
 {
     return speedMultiplier;
+}
+
+AlgorithmType SortController::getCurrentAlgorithmType() const
+{
+    return currentAlgorithm;
+}
+
+void SortController::reset()
+{
+    delete algorithm;
+    algorithm = nullptr;
+
+    running = false;
+
+    speedMultiplier = 1.0f;
+    accumulatedTime = 0.0f;
+
+    clock.restart();
 }
