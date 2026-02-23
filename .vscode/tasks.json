@@ -17,6 +17,10 @@
                 "src\\render\\UIOverlay.cpp",
                 "src\\algorithms\\SelectionSort.cpp",
                 "src\\algorithms\\InsertionSort.cpp",
+                "src\\algorithms\\QuickSort.cpp",
+                "src\\algorithms\\MergeSort.cpp",
+
+                
                 "-LC:\\SFML\\lib",
                 "-lsfml-graphics",
                 "-lsfml-window",

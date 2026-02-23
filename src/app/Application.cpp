@@ -1,8 +1,12 @@
 #include "Application.hpp"
 #include <iostream>
+static const unsigned int MIN_WIDTH = 800;
+static const unsigned int MIN_HEIGHT = 650;
 
 Application::Application()
-    : window(sf::VideoMode({800, 600}), "Sorting Visualizer")
+    : window(sf::VideoMode({800, 650}),
+             "Sorting Visualizer",
+             sf::Style::Default)
 {
     window.setFramerateLimit(60);
     currentState = VisualizerState::WaitingForInput;
@@ -26,6 +30,31 @@ void Application::processEvents()
         if (event->is<sf::Event::Closed>())
         {
             window.close();
+        }
+
+        if (event->is<sf::Event::Resized>())
+        {
+            auto resized = event->getIf<sf::Event::Resized>();
+
+            unsigned int newWidth = resized->size.x;
+            unsigned int newHeight = resized->size.y;
+
+            // 🔹 Enforce minimum size
+            if (newWidth < MIN_WIDTH)
+                newWidth = MIN_WIDTH;
+
+            if (newHeight < MIN_HEIGHT)
+                newHeight = MIN_HEIGHT;
+
+            window.setSize({newWidth, newHeight});
+
+            // 🔹 Update view to match new size
+            sf::View view(sf::FloatRect(
+                {0.f, 0.f},
+                {static_cast<float>(newWidth),
+                 static_cast<float>(newHeight)}));
+
+            window.setView(view);
         }
 
         if (event->is<sf::Event::KeyPressed>())
@@ -90,7 +119,29 @@ void Application::processEvents()
                     currentState == VisualizerState::Finished)
                 {
                     arrayModel.restoreOriginal();
+                    arrayModel.resetCounters();
+                    arrayModel.clearActiveIndices();
+                    arrayModel.setSortedRange(-1, -1); // 🔥 CLEAR GREEN
+
                     sortController.restart(arrayModel);
+
+                    currentState = VisualizerState::Sorting;
+                }
+            }
+            if (keyEvent->code == sf::Keyboard::Key::R &&
+                !keyEvent->shift)
+            {
+                if (currentState == VisualizerState::Sorting ||
+                    currentState == VisualizerState::Paused ||
+                    currentState == VisualizerState::Finished)
+                {
+                    arrayModel.restoreOriginal();
+                    arrayModel.resetCounters();
+                    arrayModel.clearActiveIndices();
+                    arrayModel.setSortedRange(-1, -1); // 🔥 CLEAR GREEN
+
+                    sortController.restart(arrayModel);
+
                     currentState = VisualizerState::Sorting;
                 }
             }
@@ -112,13 +163,16 @@ void Application::processEvents()
                     selectedAlgorithm = AlgorithmType::Bubble;
 
                 if (keyEvent->code == sf::Keyboard::Key::Num2)
-                {
-
                     selectedAlgorithm = AlgorithmType::Selection;
-                }
 
                 if (keyEvent->code == sf::Keyboard::Key::Num3)
                     selectedAlgorithm = AlgorithmType::Insertion;
+
+                if (keyEvent->code == sf::Keyboard::Key::Num4)
+                    selectedAlgorithm = AlgorithmType::Quick;
+
+                if (keyEvent->code == sf::Keyboard::Key::Num5)
+                    selectedAlgorithm = AlgorithmType::Merge;
             }
 
             if (keyEvent->code == sf::Keyboard::Key::R &&
@@ -151,7 +205,9 @@ void Application::update()
             currentState = VisualizerState::Finished;
         }
     }
-    uiOverlay.update(arrayModel, sortController, currentState);
+    uiOverlay.update(arrayModel, sortController, currentState,
+                     selectedAlgorithm,
+                     elementCount);
 }
 
 void Application::render()

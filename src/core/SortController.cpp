@@ -2,22 +2,24 @@
 #include "../algorithms/BubbleSort.hpp"
 #include "../algorithms/SelectionSort.hpp"
 #include "../algorithms/InsertionSort.hpp"
+#include "../algorithms/QuickSort.hpp"
+#include "../algorithms/MergeSort.hpp"
 #include "../data/ArrayModel.hpp"
 
 SortController::SortController()
     : algorithm(nullptr),
-     running(false),
+      running(false),
       currentAlgorithm(AlgorithmType::Bubble),
-     speedMultiplier(1.0f),
+      speedMultiplier(1.0f),
       accumulatedTime(0.0f),
-     baseStepTime(0.02f)
+      baseStepTime(0.02f)
 {
 }
 
 void SortController::start(ArrayModel &model, AlgorithmType type)
 {
     delete algorithm;
-    currentAlgorithm = type; 
+    currentAlgorithm = type;
 
     switch (type)
     {
@@ -31,6 +33,14 @@ void SortController::start(ArrayModel &model, AlgorithmType type)
 
     case AlgorithmType::Insertion:
         algorithm = new InsertionSort();
+        break;
+        
+    case AlgorithmType::Quick:
+        algorithm = new QuickSort();
+        break;
+
+    case AlgorithmType::Merge:
+        algorithm = new MergeSort();
         break;
     }
 
@@ -81,28 +91,47 @@ void SortController::resume()
         clock.restart();
     }
 }
-
 void SortController::restart(ArrayModel &model)
 {
+    if (!algorithm)
+        return;
+
+    // Store algorithm type
+    AlgorithmType type = currentAlgorithm;
+
+    // Delete safely
     delete algorithm;
-    switch (currentAlgorithm)
+    algorithm = nullptr;
+
+    // Recreate algorithm fresh
+    switch (type)
     {
-        case AlgorithmType::Bubble:
-            algorithm = new BubbleSort();
-            break;
+    case AlgorithmType::Bubble:
+        algorithm = new BubbleSort();
+        break;
 
-        case AlgorithmType::Selection:
-            algorithm = new SelectionSort();
-            break;
+    case AlgorithmType::Selection:
+        algorithm = new SelectionSort();
+        break;
 
-        case AlgorithmType::Insertion:
-            algorithm = new InsertionSort();
-            break;
+    case AlgorithmType::Insertion:
+        algorithm = new InsertionSort();
+        break;
+
+    case AlgorithmType::Quick:
+        algorithm = new QuickSort();
+        break;
+
+    case AlgorithmType::Merge:
+        algorithm = new MergeSort();
+        break;
     }
 
-    running = true;
+    // Reset timing system
     accumulatedTime = 0.0f;
     clock.restart();
+
+    running = true;
 }
 
 bool SortController::isRunning() const

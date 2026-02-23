@@ -15,4 +15,5 @@ private:
     int i;
     int j;
     int minIndex;
+    bool finished; 
 };

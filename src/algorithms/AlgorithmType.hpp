@@ -4,5 +4,7 @@ enum class AlgorithmType
 {
     Bubble,
     Selection,
-    Insertion
+    Insertion,
+    Quick,
+    Merge
 };

@@ -5,7 +5,7 @@ BubbleSort::BubbleSort()
 {
 }
 
-void BubbleSort::step(ArrayModel& model)
+void BubbleSort::step(ArrayModel &model)
 {
     if (finished)
         return;
@@ -15,6 +15,7 @@ void BubbleSort::step(ArrayModel& model)
     if (i >= n - 1)
     {
         finished = true;
+        model.setSortedRange(0, n - 1); 
         model.clearActiveIndices();
         return;
     }
@@ -28,13 +29,13 @@ void BubbleSort::step(ArrayModel& model)
         {
             model.swap(j, j + 1);
         }
-
         j++;
     }
     else
     {
-        j = 0;
         i++;
+         model.setSortedRange(n - i, n - 1);
+        j = 0;
     }
 }
 

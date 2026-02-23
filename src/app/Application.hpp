@@ -35,7 +35,6 @@ private:
     UIOverlay uiOverlay;
     AlgorithmType selectedAlgorithm;
     
-    // selectedAlgorithm = AlgorithmType::Bubble;
 
 
 

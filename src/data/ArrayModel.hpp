@@ -28,14 +28,20 @@ public:
     // Restore the original shuffled array
     void restoreOriginal();
 
-
     // Getters
-    const std::vector<int>& getValues() const;
+    const std::vector<int> &getValues() const;
     int getComparisons() const;
     int getSwaps() const;
     int getActiveIndex1() const;
     int getActiveIndex2() const;
     int size() const;
+
+    void setSortedRange(int start, int end);
+    int getSortedStart() const;
+    int getSortedEnd() const;
+    void clearSortedRange();
+
+    void setValue(int index, int value);
 
 private:
     std::vector<int> values;
@@ -47,4 +53,6 @@ private:
     int activeIndex1;
     int activeIndex2;
 
+    int sortedStart;
+    int sortedEnd;
 };

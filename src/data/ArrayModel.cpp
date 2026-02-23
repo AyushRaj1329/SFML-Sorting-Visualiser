@@ -11,6 +11,8 @@ ArrayModel::ArrayModel()
       activeIndex1(-1),
       activeIndex2(-1)
 {
+    sortedStart = -1;
+    sortedEnd = -1;
 }
 
 void ArrayModel::generate(int n)
@@ -31,6 +33,8 @@ void ArrayModel::generate(int n)
 
     resetCounters();
     clearActiveIndices();
+    clearSortedRange();
+    
 }
 
 void ArrayModel::resetCounters()
@@ -100,4 +104,31 @@ void ArrayModel::restoreOriginal()
     values = originalValues;
     resetCounters();
     clearActiveIndices();
+}
+
+void ArrayModel::setSortedRange(int start, int end)
+{
+    sortedStart = start;
+    sortedEnd   = end;
+}
+
+int ArrayModel::getSortedStart() const
+{
+    return sortedStart;
+}
+
+int ArrayModel::getSortedEnd() const
+{
+    return sortedEnd;
+}
+
+void ArrayModel::clearSortedRange()
+{
+    sortedStart = -1;
+    sortedEnd   = -1;
+}
+
+void ArrayModel::setValue(int index, int value)
+{
+    values[index] = value;
 }

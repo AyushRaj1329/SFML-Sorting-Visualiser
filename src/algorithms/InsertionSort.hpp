@@ -15,4 +15,5 @@ public:
 private:
     int i;
     int j;
+    bool finished; 
 };
