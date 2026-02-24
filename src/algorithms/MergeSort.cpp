@@ -6,7 +6,8 @@ MergeSort::MergeSort()
     : currentSize(1),
       leftStart(0),
       merging(false),
-      finished(false)
+      finished(false),
+      newPass(true)
 {
 }
 
@@ -17,20 +18,27 @@ void MergeSort::step(ArrayModel& model)
 
     int n = model.size();
 
+    if (currentSize >= n)
+    {
+        finished = true;
+        model.setSortedRange(0, n - 1);
+        model.clearActiveIndices();
+        return;
+    }
+
+    if (newPass)
+    {
+        temp = model.getValues();   // copy ONCE per pass
+        newPass = false;
+    }
+
     if (!merging)
     {
-        if (currentSize >= n)
-        {
-            finished = true;
-            model.setSortedRange(0, n - 1);
-            model.clearActiveIndices();
-            return;
-        }
-
         if (leftStart >= n - 1)
         {
             currentSize *= 2;
             leftStart = 0;
+            newPass = true;   // start new merge pass
             return;
         }
 
@@ -40,8 +48,6 @@ void MergeSort::step(ArrayModel& model)
         i = leftStart;
         j = mid + 1;
         k = leftStart;
-
-        temp = model.getValues();   // copy whole array
 
         merging = true;
         return;
@@ -54,27 +60,20 @@ void MergeSort::step(ArrayModel& model)
 
         if (temp[i] <= temp[j])
         {
-            model.setValue(k, temp[i]);
-            i++;
+            model.setValue(k++, temp[i++]);
         }
         else
         {
-            model.setValue(k, temp[j]);
-            j++;
+            model.setValue(k++, temp[j++]);
         }
-        k++;
     }
     else if (i <= mid)
     {
-        model.setValue(k, temp[i]);
-        i++;
-        k++;
+        model.setValue(k++, temp[i++]);
     }
     else if (j <= rightEnd)
     {
-        model.setValue(k, temp[j]);
-        j++;
-        k++;
+        model.setValue(k++, temp[j++]);
     }
     else
     {

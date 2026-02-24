@@ -25,4 +25,5 @@ private:
 
     bool merging;
     bool finished;
+    bool newPass;
 };
