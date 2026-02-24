@@ -84,7 +84,6 @@ You can watch the demo video here:
 
 [▶ Watch Demo](screenshots/demo.gif)
 
-*(Replace with actual video link or GIF file)*
 
 ---
 
@@ -140,7 +139,7 @@ sorting-visualizer/
 
 ## 👨‍💻 Author
 
-Your Name  
+Ayush Raj Chauhan  
 GitHub: https://github.com/AyushRaj1329
 
 ---
