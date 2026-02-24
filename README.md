@@ -143,5 +143,10 @@ Ayush Raj Chauhan
 GitHub: https://github.com/AyushRaj1329
 
 ---
+## 📦 Download
+
+You can download the latest Windows release here:
+
+👉 https://github.com/AyushRaj1329/SFML-Sorting-Visualiser/releases/latest
 
 ⭐ If you found this project interesting, consider giving it a star!
