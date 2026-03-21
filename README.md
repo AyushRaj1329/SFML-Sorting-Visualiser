@@ -86,7 +86,7 @@ You can watch the demo video here:
 
 
 ---
-
+'''
 ## 🏗 Project Structure
 sorting-visualizer/
 │
@@ -105,7 +105,7 @@ sorting-visualizer/
 ├── README.md
 └── .gitignore
 
-
+'''
 ---
 
 ## ⚙️ Build Instructions (Windows - MinGW)
