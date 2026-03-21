@@ -84,29 +84,23 @@ You can watch the demo video here:
 
 [▶ Watch Demo](screenshots/demo.gif)
 
+## Project Structure
 
----
-'''
-## 🏗 Project Structure
+```
 sorting-visualizer/
-│
 ├── src/
-│ ├── app/
-│ ├── core/
-│ ├── data/
-│ ├── algorithms/
-│ ├── render/
-│ └── main.cpp
-│
+│   ├── app/
+│   ├── core/
+│   ├── algorithms/
+│   ├── data/
+│   ├── render/
+│   └── main.cpp
 ├── assets/
-│ └── fonts/
-│
+│   └── fonts/
 ├── screenshots/
 ├── README.md
 └── .gitignore
-
-'''
----
+```
 
 ## ⚙️ Build Instructions (Windows - MinGW)
 
